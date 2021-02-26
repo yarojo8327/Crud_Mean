@@ -10,9 +10,9 @@ router.get('/listaAutos', async (req, res) => {
 router.post('/', async (req, res) => {
     const auto = new Auto({
         marca: req.body.marca,
-        modelo: req.modelo,
-        color: req.color,
-        precio: req.precio
+        modelo: req.body.modelo,
+        color: req.body.color,
+        precio: req.body.precio
     });
 
     const resultado = await auto.save();
@@ -46,7 +46,16 @@ router.delete('/:_id', async(req, res)=>{
     if(!auto){
         res.status(400).send('no hay auto en la BD');
     }
-    res.status(200).send('Auto Eliminado');
+    res.status(200).send(auto);
+});
+
+router.get('/:_id', async(req, res)=>{
+    const auto = await Auto.findById(req.params._id);
+
+    if(!auto){
+        res.status(400).send('no hay auto en la BD');
+    }
+    res.status(200).send(auto);
 });
 
 module.exports = router;
