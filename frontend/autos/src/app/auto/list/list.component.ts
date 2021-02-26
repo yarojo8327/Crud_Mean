@@ -12,10 +12,18 @@ export class ListComponent implements OnInit {
   constructor(private router: Router, private auto: AutoService) { }
 
   autos: any[] = [];
+  autoMarca = "";
   ngOnInit(): void {
     this.listarAutos();
   }
 
+  filtrar(){
+    if(this.autoMarca.length){
+      this.autos = this.autos.filter((list: { marca: string | any[]; }) => list.marca.includes(this.autoMarca))
+    }else{
+      this.listarAutos();
+    }
+  }
 
   listarAutos(){
     this.auto.getAll().subscribe(
